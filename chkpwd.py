@@ -6,6 +6,9 @@
 
 # $ python3 -i chkpwd.py --password SECRET -v
 # $ python3 -i chkpwd.py -p 'secretSECRET123!@#' -l 10 -a 3 -A 3 -n 3 -s 3 -v
+# $ pytest -v -pdb --fulltrace chkpwd.py
+# $ coverage run -m pytest chkpwd.py && coverage html
+# $ cd htmlcov/ && python3 -m http.server
 
 # TODO Accept passwords in stdin. Newline seperates passwords, EOF ends input (Ctrl-D).
 # TODO modfiy output to inlcude the password tested
