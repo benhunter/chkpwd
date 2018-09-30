@@ -35,7 +35,7 @@ def main():
         except Exception as exception:
             print(exception)
     else:
-        if check_password(args):
+        if check_password(**vars(args)):
             print('PASSED - All tests passed.')
 
 
