@@ -149,7 +149,14 @@ def test_main(monkeypatch):
     parse_args = lambda args: settings
     
     # create named tuple to mock the argparse.Namespace oject
-    Settings = collections.namedtuple('Settings', ['verbose', 'password', 'length', 'lower', 'upper', 'special', 'set', 'number'])
+    # Settings = collections.namedtuple('Settings', ['verbose', 'password', 'length', 'lower', 'upper', 'special', 'set', 'number'])
+
+    # create class to mock argparse.Namespace object
+    class Settings(object):
+        # def __init__(self, verbose=True, password='', length=0, lower=0, upper=0, special=0, set=DEFAULT_SPECIAL_CHAR, number=0):
+        def __init__(self, **attrs):
+            for attr in attrs:
+                self.__setattr__(attr, attrs[attr])
 
     # test with password
     settings = Settings(verbose=True, password='pasword123', length=0, lower=0, upper=0, special=0, set='!@#', number=0)
@@ -157,10 +164,13 @@ def test_main(monkeypatch):
     
     # test without password
     settings = Settings(verbose=True, password='', length=0, lower=0, upper=0, special=0, set='!@#', number=0)
+    
     # DEBUG
     # import pdb; pdb.set_trace()
+    
     # mock input()
-    monkeypatch.setattr('builtins.input', lambda: 'password123')
+    input_list_iter = iter(['password123', 'password123', 'password123'])
+    monkeypatch.setattr('builtins.input', lambda **kw: next(input_list_iter))
     assert input()=='password123'
     main()
 
